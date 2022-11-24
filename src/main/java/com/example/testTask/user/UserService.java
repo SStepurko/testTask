@@ -9,6 +9,7 @@ import java.util.List;
 @Component
 public class UserService {
 
+	//	Dependency injection
 	private final UserRepository userRepository;
 
 	@Autowired

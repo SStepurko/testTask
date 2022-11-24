@@ -20,7 +20,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
-
+	// test GET point
 	@GetMapping
 	public List<AppUser> getUsers() {
 		return userService.getUsers();
