@@ -1,22 +1,29 @@
 package com.example.testTask.user;
 
-public class User {
+import javax.persistence.*;
+
+@Entity
+@Table
+public class AppUser {
+	@Id
+	@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
 	private Long id;
 	private String name;
 	private String password;
 	private String message;
 
-	public User() {
+	public AppUser() {
 	}
 
-	public User(Long id, String name, String password, String message) {
+	public AppUser(Long id, String name, String password, String message) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.message = message;
 	}
 
-	public User(String name, String password, String message) {
+	public AppUser(String name, String password, String message) {
 		this.name = name;
 		this.password = password;
 		this.message = message;

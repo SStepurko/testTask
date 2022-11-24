@@ -7,10 +7,10 @@ import java.util.List;
 // Service layer
 @Component
 public class UserService {
-	public List<User> getUsers() {
+	public List<AppUser> getUsers() {
 		return List.of(
-				new User(1L, "user1", "pass1", "msg1"),
-				new User(2L, "user2", "pass2", "msg2")
+				new AppUser(1L, "user1", "pass1", "msg1"),
+				new AppUser(2L, "user2", "pass2", "msg2")
 		);
 	}
 }
