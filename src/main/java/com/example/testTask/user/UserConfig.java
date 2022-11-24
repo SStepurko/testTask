@@ -1,5 +1,6 @@
 package com.example.testTask.user;
 
+import com.example.testTask.entity.AppUser;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
