@@ -1,5 +1,6 @@
 package com.example.testTask.user;
 
+import com.example.testTask.PostData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +20,9 @@ public class UserService {
 
 	public List<AppUser> getUsers() {
 		return userRepository.findAll();
-//		return List.of(
-//				new AppUser(1L, "user1", "pass1", "msg1"),
-//				new AppUser(2L, "user2", "pass2", "msg2")
-//		);
+	}
+
+	public void addNewMessage(PostData postData) {
+		System.out.println(postData.getMessage());
 	}
 }
