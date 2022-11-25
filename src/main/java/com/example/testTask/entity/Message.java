@@ -10,6 +10,7 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_sequence")
 	private Long messageId;
 	private String messageText;
+
 	private Long messagesUserId;
 
 	public Message() {
