@@ -2,6 +2,7 @@ package com.example.testTask.user;
 
 import com.example.testTask.PostData;
 import com.example.testTask.entity.AppUser;
+import com.example.testTask.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -14,27 +14,37 @@ public class AppUser {
 //	TODO uniq nonNull
 	private String name;
 	private String password;
-	//	TODO change to list
-	private String message;
+//	private String message;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(referencedColumnName = "user_id")
-	private List<Message> messages;
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(referencedColumnName = "user_id")
+//	private List<Message> messages;
 
 	public AppUser() {
 	}
 
-	public AppUser(Long user_id, String name, String password, String message) {
+	public AppUser(Long user_id, String name, String password) {
 		this.user_id = user_id;
 		this.name = name;
 		this.password = password;
-		this.message = message;
 	}
 
-	public AppUser(String name, String password, String message) {
+//	public AppUser(Long user_id, String name, String password, String message) {
+//		this.user_id = user_id;
+//		this.name = name;
+//		this.password = password;
+//		this.message = message;
+//	}
+
+//	public AppUser(String name, String password, String message) {
+//		this.name = name;
+//		this.password = password;
+//		this.message = message;
+//	}
+
+	public AppUser(String name, String password) {
 		this.name = name;
 		this.password = password;
-		this.message = message;
 	}
 
 	public Long getUser_id() {
@@ -61,13 +71,13 @@ public class AppUser {
 		this.password = password;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
+//	public String getMessage() {
+//		return message;
+//	}
+//
+//	public void setMessage(String message) {
+//		this.message = message;
+//	}
 
 	@Override
 	public String toString() {
@@ -75,7 +85,6 @@ public class AppUser {
 				"id=" + user_id +
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
-				", message='" + message + '\'' +
 				'}';
 	}
 }

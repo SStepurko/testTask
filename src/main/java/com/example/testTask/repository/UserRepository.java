@@ -1,4 +1,4 @@
-package com.example.testTask.user;
+package com.example.testTask.repository;
 
 import com.example.testTask.entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;

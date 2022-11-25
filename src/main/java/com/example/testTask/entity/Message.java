@@ -10,13 +10,20 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_sequence")
 	private Long messageId;
 	private String messageText;
+	private Long messagesUserId;
 
 	public Message() {
 	}
 
-	public Message(Long messageId, String messageText) {
+	public Message(Long messageId, String messageText, Long messagesUserId) {
 		this.messageId = messageId;
 		this.messageText = messageText;
+		this.messagesUserId = messagesUserId;
+	}
+
+	public Message(String messageText, Long messagesUserId) {
+		this.messageText = messageText;
+		this.messagesUserId = messagesUserId;
 	}
 
 	public String getMessageText() {
@@ -33,5 +40,22 @@ public class Message {
 
 	public Long getMessageId() {
 		return messageId;
+	}
+
+	public Long getMessagesUserId() {
+		return messagesUserId;
+	}
+
+	public void setMessagesUserId(Long messagesUserId) {
+		this.messagesUserId = messagesUserId;
+	}
+
+	@Override
+	public String toString() {
+		return "Message{" +
+				"messageId=" + messageId +
+				", messageText='" + messageText + '\'' +
+				", messagesUserId=" + messagesUserId +
+				'}';
 	}
 }
