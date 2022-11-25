@@ -10,9 +10,5 @@ import java.util.Optional;
 // Data layer
 @Repository
 public interface UserRepository extends JpaRepository<AppUser, Long> {
-
-	List<AppUser> findByName(String name);
-
-//	@Query("SELECT u FROM AppUser WHERE u.name = ?!")
 	Optional<AppUser> findAppUserByName(String name);
 }

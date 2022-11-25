@@ -1,4 +1,4 @@
-package com.example.testTask.user;
+package com.example.testTask.config;
 
 import com.example.testTask.entity.AppUser;
 import com.example.testTask.entity.Message;

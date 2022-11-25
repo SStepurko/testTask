@@ -1,12 +1,13 @@
-package com.example.testTask.user;
+package com.example.testTask.api;
 
-import com.example.testTask.PostData;
 import com.example.testTask.entity.AppUser;
 import com.example.testTask.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 // API layer
 @RestController
@@ -22,14 +23,23 @@ public class UserController {
 	}
 
 	@PostMapping
-	public void messageController(@RequestBody PostData postData) {
-		userService.addNewMessage(postData);
+	public ResponseEntity messageController(@RequestBody PostData postData) {
+
+		Long currentUserId = userService.getUserId(postData.getName());
+
+		if (Objects.equals(postData.getMessage(), "history 10")) {
+				return ResponseEntity.ok(userService.getLastMessages(currentUserId));
+		} else {
+			userService.addNewMessage(postData.getMessage(), currentUserId);
+			return ResponseEntity.ok("added");
+		}
+
 	}
 
 	// test GET point
 	@GetMapping
 	public List<AppUser> getUsers() {
-		return userService.getUsers();
+		return userService.getAllUsers();
 	}
 
 }

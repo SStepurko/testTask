@@ -1,4 +1,4 @@
-package com.example.testTask;
+package com.example.testTask.api;
 
 public class PostData {
 	private String name;
