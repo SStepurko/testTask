@@ -30,15 +30,22 @@ public class UserService implements UserDetailsService {
 		this.messageRepository = messageRepository;
 	}
 
-	public List<Message> getLastMessages(String name) {
-		AppUser user = userRepository.findAppUserByName(name).get();
-		List<Message> allByMessagesUserId = messageRepository.findFirst10ByAppUser(user);
-		return allByMessagesUserId;
+	public List<Message> getLastMessages(String name) throws UsernameNotFoundException {
+		Optional<AppUser> user = userRepository.findAppUserByName(name);
+		if (user.isEmpty()) {
+			throw new UsernameNotFoundException("User not found in DB");
+		} else {
+			return messageRepository.findFirst10ByAppUser(user.get());
+		}
 	}
 
-	public void addNewMessage(String message, String name) {
-		AppUser user = userRepository.findAppUserByName(name).get();
-		messageRepository.save(new Message(message, user));
+	public void addNewMessage(String message, String name) throws UsernameNotFoundException{
+		Optional<AppUser> user = userRepository.findAppUserByName(name);
+		if (user.isEmpty()) {
+			throw new UsernameNotFoundException("User not found in DB");
+		} else {
+			messageRepository.save(new Message(message, user.get()));
+		}
 	}
 
 	//	method for user detail service for security
