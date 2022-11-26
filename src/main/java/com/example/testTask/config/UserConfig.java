@@ -7,33 +7,27 @@ import com.example.testTask.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 
 import java.util.List;
 
+/**
+ * Prepare two users for DB and two messages.
+ */
 @Configuration
 public class UserConfig {
 
 	@Bean
 	CommandLineRunner userRun(UserRepository userRepository, MessageRepository messageRepository) {
 		return args -> {
-//			add two default users to DB
+// add two default users to DB
 			AppUser user1 = new AppUser("user1", "pass1");
 			AppUser user2 = new AppUser("user2", "pass2");
 			userRepository.saveAll(List.of(user1, user2));
+// add two messages for user1
 			Message msg0101 = new Message("message 01 01", user1);
 			Message msg0201 = new Message("message 02 01", user1);
 			messageRepository.saveAll(List.of(msg0101, msg0201));
 		};
 	}
 
-//	@Bean
-//	@DependsOn("userRun")
-//	CommandLineRunner messageRun(MessageRepository repository) {
-//		return args -> {
-//			Message msg0101 = new Message("message 01 01", user1);
-//			Message msg0201 = new Message("message 02 01", 1L);
-//			repository.saveAll(List.of(msg0101, msg0201));
-//		};
-//	}
 }

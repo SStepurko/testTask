@@ -11,10 +11,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * JWT utility. Generate token, extract data from token, validate token.
+ */
 @Service
 public class JwtImpl {
-	private String SECRET = "mysecret";
+	private final String SECRET = "mysecret";
 
+	/**
+	 * Public method to call internal create token method
+	 *
+	 * @param userDetails AppUser class
+	 * @return jwt token
+	 */
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, userDetails.getUsername());
@@ -26,31 +35,37 @@ public class JwtImpl {
 				.signWith(SignatureAlgorithm.HS256, SECRET).compact();
 	}
 
-//	realization of io.jsonwebtoken Claims class methods to get username and expiration date from token
-	private Claims extractAllClaims(String token){
+	//	realization of io.jsonwebtoken Claims class methods to get username and expiration date from token
+	private Claims extractAllClaims(String token) {
 		return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
 	}
 
-//	method with Claims builtin functions, so we can use them
-	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
+	//	method with Claims builtin functions, so we can use them
+	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaims(token);
 		return claimsResolver.apply(claims);
 	}
 
-	public String extractUsername(String token){
-			return extractClaim(token, Claims::getSubject);
+	public String extractUsername(String token) {
+		return extractClaim(token, Claims::getSubject);
 	}
 
-	public Date extractExpiration(String token){
+	public Date extractExpiration(String token) {
 		return extractClaim(token, Claims::getExpiration);
 	}
 
-	private Boolean isTokenExpired(String token){
+	private Boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
 	}
 
-//	check username from token and expiration time of token
-	public Boolean validateToken(String token, UserDetails userDetails){
+	/**
+	 * check username from token and expiration time of token
+	 *
+	 * @param token       jwt token
+	 * @param userDetails user details
+	 * @return true or false
+	 */
+	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = extractUsername(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}

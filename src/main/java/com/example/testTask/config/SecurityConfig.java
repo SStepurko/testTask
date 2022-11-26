@@ -2,7 +2,6 @@ package com.example.testTask.config;
 
 
 import com.example.testTask.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,9 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Change default spring security. Change auth provider to JWT token. Make "/api/authenticate" allow to accept request.
+ * Make stateless sessions, so it works only with token in requests.
+ */
 @Configuration
 public class SecurityConfig {
 
+	//	Dependency Injection
 	private final UserService userDetailsService;
 	private final JwtFilter jwtFilter;
 
@@ -26,6 +30,7 @@ public class SecurityConfig {
 		this.jwtFilter = jwtFilter;
 	}
 
+	//	implementation of default spring security, so we can use
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -45,6 +50,7 @@ public class SecurityConfig {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
+	//	We need one point of authentication and make another point free to access
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers("/api/authenticate").permitAll().anyRequest().authenticated()

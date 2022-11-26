@@ -2,6 +2,10 @@ package com.example.testTask.entity;
 
 import javax.persistence.*;
 
+/**
+ * Data layer entity for user`s messages.
+ * messageId, messageText, message_user_id
+ */
 @Entity
 @Table
 public class Message {
@@ -10,11 +14,9 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_sequence")
 	private Long messageId;
 	private String messageText;
-
 	@ManyToOne
 	@JoinColumn(name = "message_user_id", referencedColumnName = "userId")
 	private AppUser appUser;
-//	private Long messagesUserId;
 
 	public Message() {
 	}
@@ -32,26 +34,17 @@ public class Message {
 		this.messageText = messageText;
 	}
 
-	public void setMessageId(Long messageId) {
-		this.messageId = messageId;
-	}
-
 	public Long getMessageId() {
 		return messageId;
 	}
 
-//	public Long getMessagesUserId() {
-//		return messagesUserId;
-//	}
-
-//	public void setMessagesUserId(Long messagesUserId) {
-//		this.messagesUserId = messagesUserId;
-//	}
+	public void setMessageId(Long messageId) {
+		this.messageId = messageId;
+	}
 
 	@Override
 	public String toString() {
 		return "Message{" +
-				"messageId=" + messageId +
 				", messageText='" + messageText + '\'' +
 				'}';
 	}

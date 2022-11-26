@@ -7,11 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Message repository with new findFirst10ByAppUser
+ */
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-	List<Message> findAllByAppUser (AppUser user);
-//	List<Message> findAllByMessagesUserId (Long messagesUserId);
-	List<Message> findTopByAppUser (AppUser user);
-//	List<Message> findTopByMessagesUserId (Long messagesUserId);
-	List<Message> findFirst10ByAppUser (AppUser user);
+	List<Message> findFirst10ByAppUser(AppUser user);
 }

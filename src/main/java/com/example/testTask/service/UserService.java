@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-// Service layer
+/**
+ * Service to work with repository. Also implements UserDetailsService so we can use it in security section
+ */
 @Component
 public class UserService implements UserDetailsService {
 
@@ -28,18 +30,6 @@ public class UserService implements UserDetailsService {
 		this.messageRepository = messageRepository;
 	}
 
-	public List<AppUser> getAllUsers() {
-		return userRepository.findAll();
-	}
-
-	public Long getUserId(String name) {
-		Optional<AppUser> appUserByName = userRepository.findAppUserByName(name);
-		if (appUserByName.isEmpty()) {
-			throw new IllegalStateException("can't find user");
-		}
-		return appUserByName.get().getUserId();
-	}
-
 	public List<Message> getLastMessages(String name) {
 		AppUser user = userRepository.findAppUserByName(name).get();
 		List<Message> allByMessagesUserId = messageRepository.findFirst10ByAppUser(user);
@@ -48,9 +38,8 @@ public class UserService implements UserDetailsService {
 
 	public void addNewMessage(String message, String name) {
 		AppUser user = userRepository.findAppUserByName(name).get();
-			messageRepository.save(new Message(message, user));
+		messageRepository.save(new Message(message, user));
 	}
-
 
 	//	method for user detail service for security
 	@Override

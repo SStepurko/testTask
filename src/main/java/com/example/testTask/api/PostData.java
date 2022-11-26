@@ -1,5 +1,8 @@
 package com.example.testTask.api;
 
+/**
+ * Class to map requests with JSON body { name: "name, message: "message" }
+ */
 public class PostData {
 	private String name;
 	private String message;

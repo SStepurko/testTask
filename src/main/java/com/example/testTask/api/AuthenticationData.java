@@ -1,9 +1,14 @@
 package com.example.testTask.api;
 
+
+/**
+ * Class to map authentication request with JSON body { name: "name, password: "password" }
+ */
 public class AuthenticationData {
 	private String name;
 	private String password;
 
+//	default constructors;
 	public AuthenticationData() {
 	}
 
@@ -12,6 +17,7 @@ public class AuthenticationData {
 		this.password = password;
 	}
 
+//	default getter and setter methods
 	public String getName() {
 		return name;
 	}
