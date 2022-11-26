@@ -3,13 +3,13 @@ package com.example.testTask.entity;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "AppUser")
 @Table(name = "app_user")
 public class AppUser {
 	@Id
 	@SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-	private Long user_id;
+	private Long userId;
 	@Column
 //	TODO uniq nonNull
 	private String name;
@@ -23,8 +23,8 @@ public class AppUser {
 	public AppUser() {
 	}
 
-	public AppUser(Long user_id, String name, String password) {
-		this.user_id = user_id;
+	public AppUser(Long userId, String name, String password) {
+		this.userId = userId;
 		this.name = name;
 		this.password = password;
 	}
@@ -47,12 +47,12 @@ public class AppUser {
 		this.password = password;
 	}
 
-	public Long getUser_id() {
-		return user_id;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(Long id) {
-		this.user_id = id;
+	public void setUserId(Long id) {
+		this.userId = id;
 	}
 
 	public String getName() {
@@ -82,7 +82,7 @@ public class AppUser {
 	@Override
 	public String toString() {
 		return "User{" +
-				"id=" + user_id +
+				"id=" + userId +
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
 				'}';

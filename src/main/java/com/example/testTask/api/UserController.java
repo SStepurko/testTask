@@ -35,12 +35,10 @@ public class UserController {
 	@PostMapping(value = "/message")
 	public ResponseEntity messageController(@RequestBody PostData postData) {
 
-		Long currentUserId = userService.getUserId(postData.getName());
-
 		if (Objects.equals(postData.getMessage(), "history 10")) {
-			return ResponseEntity.ok(userService.getLastMessages(currentUserId));
+			return ResponseEntity.ok(userService.getLastMessages(postData.getName()));
 		} else {
-			userService.addNewMessage(postData.getMessage(), currentUserId);
+			userService.addNewMessage(postData.getMessage(), postData.getName());
 			return ResponseEntity.ok("added");
 		}
 
@@ -58,13 +56,6 @@ public class UserController {
 		final UserDetails userDetails = userService.loadUserByUsername(authenticationData.getName());
 		final String jwt = jwtImpl.generateToken(userDetails);
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));
-	}
-
-
-	// test GET point
-	@GetMapping
-	public List<AppUser> getUsers() {
-		return userService.getAllUsers();
 	}
 
 }

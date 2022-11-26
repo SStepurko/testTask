@@ -11,20 +11,17 @@ public class Message {
 	private Long messageId;
 	private String messageText;
 
-	private Long messagesUserId;
+	@ManyToOne
+	@JoinColumn(name = "message_user_id", referencedColumnName = "userId")
+	private AppUser appUser;
+//	private Long messagesUserId;
 
 	public Message() {
 	}
 
-	public Message(Long messageId, String messageText, Long messagesUserId) {
-		this.messageId = messageId;
+	public Message(String messageText, AppUser appUser) {
 		this.messageText = messageText;
-		this.messagesUserId = messagesUserId;
-	}
-
-	public Message(String messageText, Long messagesUserId) {
-		this.messageText = messageText;
-		this.messagesUserId = messagesUserId;
+		this.appUser = appUser;
 	}
 
 	public String getMessageText() {
@@ -43,20 +40,19 @@ public class Message {
 		return messageId;
 	}
 
-	public Long getMessagesUserId() {
-		return messagesUserId;
-	}
+//	public Long getMessagesUserId() {
+//		return messagesUserId;
+//	}
 
-	public void setMessagesUserId(Long messagesUserId) {
-		this.messagesUserId = messagesUserId;
-	}
+//	public void setMessagesUserId(Long messagesUserId) {
+//		this.messagesUserId = messagesUserId;
+//	}
 
 	@Override
 	public String toString() {
 		return "Message{" +
 				"messageId=" + messageId +
 				", messageText='" + messageText + '\'' +
-				", messagesUserId=" + messagesUserId +
 				'}';
 	}
 }

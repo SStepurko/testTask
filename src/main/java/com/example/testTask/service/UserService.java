@@ -5,7 +5,6 @@ import com.example.testTask.entity.Message;
 import com.example.testTask.repository.MessageRepository;
 import com.example.testTask.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +21,7 @@ public class UserService implements UserDetailsService {
 	//	Dependency injection
 	private final UserRepository userRepository;
 	private final MessageRepository messageRepository;
+
 	@Autowired
 	public UserService(UserRepository userRepository, MessageRepository messageRepository) {
 		this.userRepository = userRepository;
@@ -37,30 +37,22 @@ public class UserService implements UserDetailsService {
 		if (appUserByName.isEmpty()) {
 			throw new IllegalStateException("can't find user");
 		}
-		return appUserByName.get().getUser_id();
+		return appUserByName.get().getUserId();
 	}
 
-	public List<Message> getLastMessages(Long userId) {
-		List<Message> allByMessagesUserId = messageRepository.findAllByMessagesUserId(userId);
+	public List<Message> getLastMessages(String name) {
+		AppUser user = userRepository.findAppUserByName(name).get();
+		List<Message> allByMessagesUserId = messageRepository.findFirst10ByAppUser(user);
 		return allByMessagesUserId;
 	}
 
-//	public void addNewMessage(PostData postData) {
-//		Optional<AppUser> userByName = userRepository.findAppUserByName(postData.getName());
-////		List<AppUser> userByName = userRepository.findByName(postData.getName());
-//		List<Message> allByMessagesUserId = messageRepository.findAllByMessagesUserId(userByName.get().getUser_id());
-//		System.out.println(userByName);
-//		System.out.println(allByMessagesUserId);
-//
-////		System.out.println(postData.getMessage());
-//	}
-
-	public void addNewMessage(String message, Long id) {
-		messageRepository.save(new Message(message, id));
+	public void addNewMessage(String message, String name) {
+		AppUser user = userRepository.findAppUserByName(name).get();
+			messageRepository.save(new Message(message, user));
 	}
 
 
-//	method for user detail service for security
+	//	method for user detail service for security
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<AppUser> appUser = userRepository.findAppUserByName(username);
