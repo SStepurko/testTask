@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
@@ -16,6 +17,8 @@ import java.util.function.Function;
  */
 @Service
 public class JwtImpl {
+//	time to expire token in minutes.
+	public static final int TIME = 60;
 	private final String SECRET = "mysecret";
 
 	/**
@@ -30,9 +33,14 @@ public class JwtImpl {
 	}
 
 	private String createToken(Map<String, Object> claims, String subject) {
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() * 60 * 60 * 10))
-				.signWith(SignatureAlgorithm.HS256, SECRET).compact();
+		return Jwts
+				.builder()
+				.setClaims(claims)
+				.setSubject(subject)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(TIME)))
+				.signWith(SignatureAlgorithm.HS256, SECRET)
+				.compact();
 	}
 
 	//	realization of io.jsonwebtoken Claims class methods to get username and expiration date from token

@@ -53,9 +53,18 @@ public class SecurityConfig {
 	//	We need one point of authentication and make another point free to access
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/api/authenticate").permitAll().anyRequest().authenticated()
+		http
+				.csrf()
+				.disable()
+				.authorizeRequests()
+				.antMatchers("/api/authenticate")
+				.permitAll()
+				.anyRequest()
+				.authenticated()
 //				turn off sessions
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
