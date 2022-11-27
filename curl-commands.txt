@@ -1,0 +1,10 @@
+# аутентификация со встроенным пользователем
+curl -H "Content-Type: application/json" --request POST --data '{"name":"user1","password":"pass1"}' localhost:7000/api/authenticate 
+
+TOKEN=$(вставить полученный токен)
+
+# получаем последние 10 сообщений - в базе на старте есть два сообщения для пользователя user1
+curl -H "Content-Type: application/json" -H "Authorization: Bearer_${TOKEN}" --request POST --data '{"name":"user1","message":"history 10"}' localhost:7000/api/message
+
+# добавляем сообщения
+curl -H "Content-Type: application/json" -H "Authorization: Bearer_${TOKEN}" --request POST --data '{"name":"user1","message":"new message"}' localhost:7000/api/message
